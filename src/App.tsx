@@ -1,5 +1,10 @@
-function App() {
-  return <h1>Init</h1>;
-}
+import { Header } from "./components/Header";
+import "./styles/global.scss";
 
-export default App;
+export function App() {
+  return (
+    <>
+      <Header />
+    </>
+  );
+}
