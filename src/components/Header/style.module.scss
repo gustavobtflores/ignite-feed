@@ -1,7 +1,4 @@
-$gray1: #121214;
-$gray2: #202024;
-$app-background: $gray1;
-$header-background: $gray2;
+@import "../../styles/variables";
 
 .header {
   background: $header-background;
@@ -9,7 +6,7 @@ $header-background: $gray2;
   height: 100px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  padding: 1.25rem 0;
 
   h1 {
     color: #ffffff;
@@ -22,5 +19,9 @@ $header-background: $gray2;
       font-weight: 700;
       line-height: 160%;
     }
+  }
+
+  img {
+    height: 2rem;
   }
 }
