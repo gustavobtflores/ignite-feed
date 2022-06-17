@@ -13,7 +13,7 @@ export function Sidebar() {
         <div className={styles.avatar}>
           <img src="https://github.com/gustavobtflores.png" alt="User avatar" />
         </div>
-        <strong>Gustavo Bernardo</strong>
+        <strong>Gustavo Flores</strong>
         <span>Front-end Developer</span>
         <hr />
         <a href="#" className={styles["edit-button"]}>
