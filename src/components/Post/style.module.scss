@@ -1,0 +1,116 @@
+@import "../../styles/variables";
+
+.post {
+  background-color: $main-shape;
+  padding: 2.5rem;
+  border-radius: 8px;
+
+  > header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.user {
+  display: flex;
+  align-items: center;
+
+  &-info {
+    display: flex;
+    align-items: flex-start;
+    margin-left: 1rem;
+    flex-direction: column;
+
+    strong {
+      color: #ffffff;
+      line-height: 1.6;
+      vertical-align: middle;
+    }
+
+    span {
+      color: $gray4;
+    }
+  }
+
+  .avatar {
+    width: 3.75rem;
+    height: 3.75rem;
+    display: flex;
+    padding: 0.25rem;
+    border: 2px solid $brand-light;
+    border-radius: 8px;
+    background-color: $main-shape;
+
+    img {
+      border-radius: 4px;
+    }
+  }
+}
+
+.posted-time {
+  color: $gray4;
+  font-size: 0.875rem;
+}
+
+.content {
+  padding: 24px 0;
+
+  p {
+    color: $gray5;
+    margin-bottom: 16px;
+  }
+
+  a {
+    color: $brand-light;
+    font-weight: 700;
+  }
+
+  border-bottom: 1px solid #323238;
+}
+
+.commentForm {
+  margin-top: 1.5rem;
+
+  &:focus-within footer {
+    visibility: visible;
+    max-height: none;
+  }
+
+  > strong {
+    color: $gray6;
+    font-weight: 700;
+    display: block;
+  }
+
+  > textarea {
+    resize: none;
+    width: 100%;
+    height: 6rem;
+    background-color: $gray1;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    transition: border-color 0.1s ease-in-out;
+    padding: 1rem;
+    color: $gray5;
+    margin: 1rem 0;
+  }
+
+  footer {
+    visibility: hidden;
+    max-height: 0;
+  }
+
+  button[type="submit"] {
+    background-color: $brand-mid;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    color: #ffffff;
+    border: none;
+    transition: background-color 0.1s linear;
+
+    &:hover {
+      background-color: #006647;
+    }
+  }
+}
