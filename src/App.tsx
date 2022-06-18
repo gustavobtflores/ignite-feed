@@ -3,6 +3,7 @@ import "./styles/global.scss";
 import styles from "./App.module.scss";
 import { Post } from "./components/Post";
 import { Sidebar } from "./components/Sidebar";
+import { Comment } from "./components/Comment";
 
 export function App() {
   return (
@@ -14,6 +15,7 @@ export function App() {
         <main>
           <Post />
         </main>
+        {/* <Comment /> */}
       </div>
     </>
   );
