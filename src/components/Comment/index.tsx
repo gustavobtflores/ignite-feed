@@ -1,24 +1,37 @@
-import { Trash } from "phosphor-react";
+import { ThumbsUp, Trash } from "phosphor-react";
+import { Avatar } from "../Avatar";
+import { CommentTypes } from "../Post";
 import styles from "./style.module.scss";
 
-export const Comment: React.FC = () => {
+interface CommentProps {
+  comment: CommentTypes;
+}
+
+export const Comment = ({ comment }: CommentProps) => {
   return (
     <div className={styles.comment}>
-      <img src="https://github.com/gustavobtflores.png" alt="" />
+      <Avatar hasBorder={false} image={comment.user.avatar} />
       <div className={styles.commentBox}>
         <div className={styles.commentContent}>
           <header>
             <div className={styles.authorAndTime}>
-              <strong>Gustavo Flores</strong>
-              <time title="8 de maio as 20:34h" dateTime="2022-05-11 20:34:20">
-                Cerca de 1h atrás
+              <strong>{comment.user.name}</strong>
+              <time title={comment.time.toString()} dateTime={comment.time.toString()}>
+                {comment.time.toLocaleString("pt-br")}
               </time>
-              <Trash />
             </div>
+            <button title="Deletar comentário" className={styles.deleteButton}>
+              <Trash size={24} />
+            </button>
           </header>
-          <p>Muito bom Devon, parabéns!! 👏👏</p>
+          <p>{comment.content}</p>
         </div>
-        <footer>Aplaudir</footer>
+        <footer>
+          <button className={styles.likeButton}>
+            <ThumbsUp color="#8d8d99" size={20} />
+            Aplaudir<span>{10}</span>
+          </button>
+        </footer>
       </div>
     </div>
   );

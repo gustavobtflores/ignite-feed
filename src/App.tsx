@@ -5,6 +5,8 @@ import { Post } from "./components/Post";
 import { Sidebar } from "./components/Sidebar";
 import { Comment } from "./components/Comment";
 
+const posts = [{}];
+
 export function App() {
   return (
     <>
@@ -15,7 +17,6 @@ export function App() {
         <main>
           <Post />
         </main>
-        {/* <Comment /> */}
       </div>
     </>
   );
