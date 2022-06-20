@@ -3,6 +3,9 @@ import "./styles/global.scss";
 import styles from "./App.module.scss";
 import { Post } from "./components/Post";
 import { Sidebar } from "./components/Sidebar";
+import { Comment } from "./components/Comment";
+
+const posts = [{}];
 
 export function App() {
   return (
