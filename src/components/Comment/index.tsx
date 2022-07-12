@@ -1,3 +1,5 @@
+import { formatDistanceToNow } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import { ThumbsUp, Trash } from "phosphor-react";
 import { Avatar } from "../Avatar";
 import { CommentTypes } from "../Post";
@@ -5,9 +7,10 @@ import styles from "./style.module.scss";
 
 interface CommentProps {
   comment: CommentTypes;
+  onDeleteComment: (content: string) => void;
 }
 
-export const Comment = ({ comment }: CommentProps) => {
+export const Comment = ({ comment, onDeleteComment }: CommentProps) => {
   return (
     <div className={styles.comment}>
       <Avatar hasBorder={false} image={comment.user.avatar} />
@@ -16,11 +19,21 @@ export const Comment = ({ comment }: CommentProps) => {
           <header>
             <div className={styles.authorAndTime}>
               <strong>{comment.user.name}</strong>
-              <time title={comment.time.toString()} dateTime={comment.time.toString()}>
-                {comment.time.toLocaleString("pt-br")}
+              <time
+                title={comment.publishedAt.toString()}
+                dateTime={comment.publishedAt.toString()}
+              >
+                {formatDistanceToNow(comment.publishedAt, {
+                  locale: ptBR,
+                  addSuffix: true,
+                })}
               </time>
             </div>
-            <button title="Deletar comentário" className={styles.deleteButton}>
+            <button
+              onClick={() => onDeleteComment(comment.content)}
+              title="Deletar comentário"
+              className={styles.deleteButton}
+            >
               <Trash size={24} />
             </button>
           </header>

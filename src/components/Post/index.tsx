@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { format, formatDistanceToNow } from "date-fns";
+import ptBR from "date-fns/locale/pt-BR";
+import { FormEvent, useState } from "react";
+import { PostContent } from "../../App";
 import { Avatar } from "../Avatar";
 import { Comment } from "../Comment";
 
@@ -14,43 +17,107 @@ export interface CommentTypes {
   publishedAt: Date;
 }
 
-export const Post = () => {
+interface PostProps {
+  author: {
+    name: string;
+    avatarUrl: string;
+    role: string;
+  };
+  content: PostContent[];
+  publishedAt: Date;
+}
+
+export const Post = ({ author, content, publishedAt }: PostProps) => {
   const [commentFormValue, setCommentFormValue] = useState<string>("");
-  const comments: CommentTypes[] = [
+  const [comments, setComments] = useState<CommentTypes[]>([
     {
       id: 1,
       user: {
         name: "Gustavo Flores",
         avatar: "https://github.com/gustavobtflores.png",
       },
-      content: "Muito bom Devon, parabéns!! 👏👏",
+      content: "Muito bom Gustavo, parabéns!! 👏👏",
       publishedAt: new Date(),
     },
-  ];
+  ]);
+
+  const publishedDateFormatted = format(
+    new Date(publishedAt),
+    "d 'de' LLLL 'às' H:mm'h'",
+    {
+      locale: ptBR,
+    }
+  );
+
+  const publishedDateRelativeToNow = formatDistanceToNow(
+    new Date(publishedAt),
+    { locale: ptBR, addSuffix: true }
+  );
+
+  const handleCreateNewComment = (event: FormEvent) => {
+    event.preventDefault();
+
+    const newComment: CommentTypes = {
+      id: Math.random(),
+      content: commentFormValue,
+      publishedAt: new Date(),
+      user: {
+        name: "Gustavo Flores",
+        avatar: "https://www.github.com/gustavobtflores.png",
+      },
+    };
+
+    setComments((comments) => {
+      return [...comments, newComment];
+    });
+
+    setCommentFormValue("");
+  };
+
+  const deleteComment = (content: string) => {
+    const commentsWithoutDeletedOne = comments.filter(
+      (comment) => comment.content !== content
+    );
+    setComments(commentsWithoutDeletedOne);
+  };
 
   return (
     <>
       <article className={styles.post}>
         <header>
           <div className={styles.user}>
-            <Avatar image="https://www.github.com/gustavobtflores.png" />
+            <Avatar image={author.avatarUrl} />
             <div className={styles["user-info"]}>
-              <strong>Gustavo Flores</strong>
-              <span>Front-end developer</span>
+              <strong>{author.name}</strong>
+              <span>{author.role}</span>
             </div>
           </div>
-          <time title="8 de maio as 20:34h" dateTime="2022-05-11 20:34:20" className={styles["posted-time"]}>
-            Publicado há 1h
+          <time
+            title={publishedDateFormatted}
+            dateTime={new Date(publishedAt).toISOString()}
+            className={styles["posted-time"]}
+          >
+            {publishedDateRelativeToNow}
           </time>
         </header>
 
         <div className={styles.content}>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, quo.</p>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, harum!</p>
-          <a href="#">jane.design/doctorcare</a>
+          {content.map((item) => {
+            if (item.type === "paragraph") {
+              return <p key={item.text}>{item.text}</p>;
+            } else if (item.type === "link") {
+              return (
+                <p key={item.text}>
+                  <a href={item.text} target="_blank">
+                    {item.text}
+                  </a>
+                </p>
+              );
+            }
+          })}
         </div>
 
-        <form className={styles.commentForm}>
+        <form onSubmit={handleCreateNewComment} className={styles.commentForm}>
           <strong>Deixe seu feedback</strong>
 
           <textarea
@@ -58,6 +125,7 @@ export const Post = () => {
               setCommentFormValue(event.target.value);
             }}
             placeholder="Deixe seu comentário"
+            value={commentFormValue}
           />
 
           <button type="submit" disabled={commentFormValue.length === 0}>
@@ -66,7 +134,13 @@ export const Post = () => {
         </form>
       </article>
       {comments.map((comment) => {
-        return <Comment key={comment.id} comment={comment} />;
+        return (
+          <Comment
+            key={comment.id}
+            comment={comment}
+            onDeleteComment={deleteComment}
+          />
+        );
       })}
     </>
   );
