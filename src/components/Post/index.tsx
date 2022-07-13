@@ -81,6 +81,8 @@ export const Post = ({ author, content, publishedAt }: PostProps) => {
     setComments(commentsWithoutDeletedOne);
   };
 
+  const isNewCommentEmpty = commentFormValue.length === 0;
+
   return (
     <>
       <article className={styles.post}>
@@ -128,7 +130,7 @@ export const Post = ({ author, content, publishedAt }: PostProps) => {
             value={commentFormValue}
           />
 
-          <button type="submit" disabled={commentFormValue.length === 0}>
+          <button type="submit" disabled={isNewCommentEmpty}>
             Publicar
           </button>
         </form>

@@ -1,6 +1,7 @@
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { ThumbsUp, Trash } from "phosphor-react";
+import { useState } from "react";
 import { Avatar } from "../Avatar";
 import { CommentTypes } from "../Post";
 import styles from "./style.module.scss";
@@ -11,6 +12,12 @@ interface CommentProps {
 }
 
 export const Comment = ({ comment, onDeleteComment }: CommentProps) => {
+  const [likeCount, setLikeCount] = useState(0);
+
+  const handleLikeComment = () => {
+    setLikeCount((count) => count + 1);
+  };
+
   return (
     <div className={styles.comment}>
       <Avatar hasBorder={false} image={comment.user.avatar} />
@@ -40,9 +47,9 @@ export const Comment = ({ comment, onDeleteComment }: CommentProps) => {
           <p>{comment.content}</p>
         </div>
         <footer>
-          <button className={styles.likeButton}>
+          <button className={styles.likeButton} onClick={handleLikeComment}>
             <ThumbsUp color="#8d8d99" size={20} />
-            Aplaudir<span>{10}</span>
+            Aplaudir<span>{likeCount}</span>
           </button>
         </footer>
       </div>
