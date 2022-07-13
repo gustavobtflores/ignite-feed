@@ -17,12 +17,14 @@ export interface CommentTypes {
   publishedAt: Date;
 }
 
+interface Author {
+  name: string;
+  avatarUrl: string;
+  role: string;
+}
+
 interface PostProps {
-  author: {
-    name: string;
-    avatarUrl: string;
-    role: string;
-  };
+  author: Author;
   content: PostContent[];
   publishedAt: Date;
 }
@@ -88,7 +90,7 @@ export const Post = ({ author, content, publishedAt }: PostProps) => {
       <article className={styles.post}>
         <header>
           <div className={styles.user}>
-            <Avatar image={author.avatarUrl} />
+            <Avatar src={author.avatarUrl} />
             <div className={styles["user-info"]}>
               <strong>{author.name}</strong>
               <span>{author.role}</span>
